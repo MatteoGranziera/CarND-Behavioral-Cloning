@@ -4,7 +4,17 @@ import cv2
 from tqdm import tqdm
 from keras.models import Sequential
 from keras.layers import Flatten, Dense, Lambda
-from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Convolution2D, MaxPooling2D
+
+from keras.backend.tensorflow_backend import set_session
+import tensorflow as tf
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+config.log_device_placement = True  # to log device placement (on which device the operation ran)
+sess = tf.Session(config=config)
+set_session(sess)  # set this TensorFlow session as the default session for Keras
+
+data_path = '../sim_data/run1/'
 
 logs = pd.read_csv(data_path + 'driving_log.csv')
 
@@ -33,9 +43,9 @@ model = Sequential()
 # Normalization
 model.add(Lambda(lambda x: x / 255 - 0.5, input_shape=(160, 320, 3)))
 
-model.add(Conv2D(6,(5,5), activation="relu"))
+model.add(Convolution2D(6,(5,5), activation="relu"))
 model.add(MaxPooling2D())
-model.add(Conv2D(6,(5,5), activation="relu"))
+model.add(Convolution2D(6,(5,5), activation="relu"))
 model.add(MaxPooling2D())
 model.add(Flatten())
 model.add(Dense(120))
