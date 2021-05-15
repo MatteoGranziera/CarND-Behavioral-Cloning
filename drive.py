@@ -44,7 +44,7 @@ class SimplePIController:
 
 
 controller = SimplePIController(0.1, 0.002)
-set_speed = 9
+set_speed = 17
 controller.set_desired(set_speed)
 
 
@@ -60,6 +60,7 @@ def telemetry(sid, data):
         # The current image from the center camera of the car
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
+        image = image.convert('YCbCr')
         image_array = np.asarray(image)
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
@@ -119,7 +120,9 @@ if __name__ == '__main__':
         print('You are using Keras version ', keras_version,
               ', but the model was built using ', model_version)
 
+    print("Loading model...")
     model = load_model(args.model)
+    print("model load complete")
 
     if args.image_folder != '':
         print("Creating image folder at {}".format(args.image_folder))
