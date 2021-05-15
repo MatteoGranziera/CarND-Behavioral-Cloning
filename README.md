@@ -5,8 +5,8 @@
 [image1]: ./images/image1.jpg "Grayscaling"
 [image2]: ./images/image2.jpg "Recovery Image"
 [image3]: ./images/image3.jpg "Recovery Image"
-[image5]: ./images/image4.jpg "Normal Image"
-[image6]: ./images/image5.jpeg "Flipped Image"
+[image4]: ./images/image4.jpg "Normal Image"
+[image5]: ./images/image5.jpeg "Flipped Image"
 
 My project includes the following files:
 * model.py containing the script to create and train the model
